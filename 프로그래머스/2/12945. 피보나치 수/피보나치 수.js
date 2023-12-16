@@ -1,12 +1,12 @@
 function solution(n) {
     
-    let result =[];
-    result[0]=0;
-    result[1]=1;
-    
-    for(let i=2;i<=n;i++)
+    let dy= Array.from({length:n+1},()=>0);
+    dy[1]=1;
+dy[2]=1;
+    for(let i=3;i<=n;i++)
         {
-            result[i]= (result[i-1]+result[i-2]) %1234567;
+            dy[i]=(dy[i-1]+dy[i-2])%1234567;
         }
-    return result[n];
+    
+    return dy[dy.length-1]
 }
