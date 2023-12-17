@@ -1,17 +1,19 @@
 function solution(brown, yellow) {
-    //카펫 조각의 총 합
-  const sum = brown + yellow ;
     
-for(let height=3;height<=brown;height++)
-    {
-        if(sum %height===0)
-            {
-                let width = sum /height;
-                
-            if((width-2) *(height-2) ===yellow)
+let result=[];
+
+    for(let i=3;i<brown;i++)
+        {
+            for(let j=3;j<brown;j++)
                 {
-                    return [width,height];
+                    if(i*j === brown + yellow && (i-2) * (j-2)===yellow)
+                        {
+                            result[0]=i;
+                            result[1]=j;
+                        }
                 }
-            }
-    }
+        }
+    return result;
+    
+    
 }
