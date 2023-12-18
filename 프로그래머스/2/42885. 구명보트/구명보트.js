@@ -1,10 +1,21 @@
 function solution(people, limit) {
-    let answer =0;
-    people.sort ((a,b) => b-a)  
-    for (let i=0, j= people.length - 1; i <=j ; i++ ) {
-        if (people[i] + people [j] <= limit )
-            j--
-        answer++
-    }
-    return answer;
+    
+    people.sort((a,b)=>a-b);
+    
+    let result=0;
+    while(people.length)
+        {
+            if(people[0]+people[people.length-1]<=limit)
+                {
+                 result++;
+                people.pop();
+                people.shift();
+                }
+            else{
+                result++;
+                 people.pop();
+            }
+        }
+    
+    return result;
 }
