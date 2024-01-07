@@ -1,27 +1,39 @@
 function solution(maps) {
-    const dy = [0, 0, 1, -1];
-    const dx = [-1, 1, 0, 0];
     
-    const goalX=maps[0].length-1;
-    const goalY=maps.length-1;
+    let dy=[-1,0,1,0];
+    let dx = [0,1,0,-1];
     
-    const queue = [];
-    queue.push([0, 0, 1]);
+    // dfs가 아닌 bfs로 풀어야함 맵 최단거리이기 떄문에
+    let result=-1;
     
-     while(queue.length) {
-        const [y, x, move] = queue.shift();
-        if(y === goalY && x === goalX) return move;
-        
-        for(let i = 0; i < 4; i++) {
-            const nx = x + dx[i];
-            const ny =y + dy[i];
-            if(ny >= 0 && ny < maps.length&& nx >= 0 && nx <maps[0].length && maps[ny][nx] === 1) {
-                queue.push([ny, nx, move + 1]);
-                maps[ny][nx] = 0;
+    const queue=[];
+    queue.push([0,0,1]);
+    
+    while(queue.length)
+        {
+       const [y,x,V] = queue.shift();
+           if(x===maps[0].length-1 && y===maps.length-1)
+            {
+                result=V;
+                break;
             }
+
+        for(let i=0;i<4;i++)
+            {
+                
+                let NX= dx[i]+x
+                let NY=dy[i]+y
+                if(NY<maps.length && NY>=0 && NX>=0 && NX<maps[0].length && maps[NY][NX]===1)
+                    {
+                        maps[NY][NX]=0
+                         queue.push([NY,NX,V+1])         
+                    }
+               
+            }
+
+        
+        
         }
-    }
     
-    return -1;
-   
+    return result;
 }
