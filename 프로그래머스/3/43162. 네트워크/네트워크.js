@@ -1,21 +1,30 @@
 function solution(n, computers) {
-    let visited = [false];
-    let answer = 0;
-
-    function dfs(i) {
-        visited[i] = true;
-        for(let j=0; j<computers[i].length; j++) {
-            if(computers[i][j]===1 && !visited[j]){
-                dfs(j);
+    
+    let result=0;
+    //n : 컴퓨터의 개수
+    //computers : 이어진 네트워크
+      const visited = [];
+    function dfs(V,visited,computers)
+    {
+        visited[V]=true;
+        for(let j=0;j<computers.length;j++)
+            {
+                if(computers[V][j]===1 && !visited[j])
+                    {
+                        dfs(j,visited,computers);
+                    }
             }
-        }
     }
     
-    for (let i=0; i < computers.length; i++) {
-        if (!visited[i]) {
-            dfs(i)
-            answer++;
+    for(let i=0;i<n;i++)
+        {
+            if(!visited[i])
+                {
+            dfs(i,visited,computers)
+            result++;          
+                }
+          
         }
-    }
-    return answer;
+    
+    return result;
 }
