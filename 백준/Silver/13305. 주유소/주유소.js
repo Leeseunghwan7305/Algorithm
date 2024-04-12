@@ -4,20 +4,16 @@ const input = require("fs")
   .trim()
   .split("\n");
 
-let currentDistance = 0;
-let distance = input[1].split(" ").map(Number);
-let price = input[2].split(" ").map(Number);
-let result = price[0] * distance[0];
-let minPrice = price[0];
-
-for (let i = 1; i < price.length; i++) {
-  if (minPrice >= price[i]) {
-    result += minPrice * currentDistance;
-    currentDistance = 0;
-    currentDistance += distance[i];
-    minPrice = price[i];
-  } else {
-    currentDistance += distance[i];
+let distance = input[1].split(" ").map((i) => BigInt(i));
+let price = input[2].split(" ").map((i) => BigInt(i));
+let current = 0;
+price.pop();
+let ovil = price[0];
+let result = 0n;
+for (let i = 0; i < distance.length; i++) {
+  result += distance[i] * ovil;
+  if (ovil > price[i + 1]) {
+    ovil = price[i + 1];
   }
 }
-console.log(result);
+console.log(String(result));
