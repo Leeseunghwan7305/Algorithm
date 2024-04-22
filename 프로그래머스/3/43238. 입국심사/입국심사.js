@@ -1,24 +1,31 @@
 function solution(n, times) {
-    times = times.sort((a,b)=>a-b);
-    let left =1;
-    let right = n*times[times.length-1];
-    let result=right;
-    while(left<=right)
+    //기다리는 사람 n
+    // 한 명을 심시하는데 걸리는 시간 배열
+    times.sort((a,b)=>a-b);
+    
+let lt =1;
+    let rt = Math.max(...times)*n;
+    let result =rt;
+ 
+    while(lt<=rt)
         {
-            let count =0;
-            let mid = Math.floor((left+right)/2);
-            times.forEach((time)=>{
-                count+= Math.floor(mid/time);
-            })            
-            if(count>=n)
+            let mid = parseInt((lt+rt)/2);
+            let data=0;
+            for(let i=0;i<times.length;i++)
                 {
-                    right=mid-1;
-                    result = Math.min(mid,result);
+                data += parseInt(mid/times[i]);
                 }
-            if(count<n)
+            
+            if(data >=n)
                 {
-                    left= mid+1;
+                rt = mid-1;
+                result = Math.min(mid,result);
                 }
+            else{
+                lt = mid+1;
+              
+            }
+            
         }
     return result;
 }
