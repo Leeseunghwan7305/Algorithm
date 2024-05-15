@@ -1,70 +1,36 @@
-// const fs = require("fs");
-
-// let input = (fs.readFileSync("../text.txt") + "")
-//   .toString()
-//   .trim()
-//   .split("\r\n");
-// let n = Number(input.shift());
-// let m = Number(input.shift());
-
-// let graph = [...new Array(n + 1)].map(() => []);
-// let ch = new Array(n + 1).fill(0);
-// let ans = 0;
-
-// ch[1] = 1;
-
-// const dfs = (start) => {
-//   graph[start].map((dest) => {
-//     if (!ch[dest]) {
-//       ch[dest] = true;
-//       ans += 1;
-//       dfs(dest);
-//     }
-//   });
-// };
-// console.log(input);
-// input.map((i) => {
-//   const [start, dest] = i.split(" ").map((ele) => Number(ele));
-//   graph[start].push(dest);
-//   graph[dest].push(start);
-// });
-
-// dfs(1);
-
-// console.log(ans);
-
-const input = require("fs")
+let input = require("fs")
   .readFileSync("/dev/stdin")
   .toString()
   .trim()
   .split("\n");
 
-let [computer, ...arr] = input;
-computer = +computer;
-arr.shift();
-let birus = arr.map((i) => i.split(" ").map((i) => +i));
+let n = +input.shift(); // 정점의 개수 (N)
+let m = +input.shift(); // 간선의 개수 (M)
 
-let graph = Array.from(Array(computer + 1), () => Array());
-let ch = Array.from({ length: computer + 1 }, () => 0);
-for (let [a, b] of birus) {
-  graph[a].push(b);
-  graph[b].push(a);
+let grape = Array.from({ length: n + 1 }, () => Array());
+let cnt = 0;
+
+for (let i = 1; i <= m; i++) {
+  let [a, b] = input[i - 1].split(" ").map(Number);
+  grape[a].push(b);
+  grape[b].push(a);
 }
-let path = [];
+
+let visited = Array.from({ length: n + 1 }).fill(false);
 
 function DFS(V) {
-  for (let a of graph[V]) {
-    if (ch[a] == 0) {
-      ch[a] = 1;
-      path.push(a);
+  if (visited[V]) {
+    return;
+  }
+  visited[V] = true;
+  cnt++;
+  for (let a of grape[V]) {
+    if (!visited[a]) {
       DFS(a);
-     
     }
   }
 }
-ch[1] = 1;
-DFS(1);
-let setPath = [...new Set(path)];
-let result = setPath.length;
 
-console.log(result);
+DFS(1);
+
+console.log(cnt - 1);
